@@ -1,0 +1,25 @@
+.homepage {
+    .homepage-section-left {
+        border-right: 5px solid #ECECF1;
+        padding-right: 30px;
+
+        .heading {
+            padding-top: 50px;
+            margin-bottom: 30px;
+            text-align: center;
+            
+            span {
+                font-family: 'Poppins-medium';
+                font-size: 20px;
+            }
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: scroll;
+            max-height: 100vh;
+        }
+    }
+}

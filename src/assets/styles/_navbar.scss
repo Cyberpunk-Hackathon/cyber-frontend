@@ -1,0 +1,36 @@
+.navbar {
+    padding: 15px 24px;
+    font-family: 'Poppins-medium';
+    background-color: white !important;
+    box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.3);
+
+    .navbar-brand {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-right: 50px;
+
+        img {
+            margin-right: 15px;
+        }
+
+        .navbar-title {
+            display: flex;
+            flex-direction: column;
+
+            .main-title {
+                font-size: 16px;
+            }
+
+            .subtitle {
+                font-size: 10px;
+                color: #9C9C9C;
+            }
+        }
+    }
+
+    .navbar-section-1 {
+        display: flex;
+        gap: 50px;
+    }
+}
