@@ -6,7 +6,7 @@ import {
   useAuth,
 } from '@clerk/clerk-react';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect , useState} from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './Router';
@@ -33,8 +33,10 @@ export default App;
 
 const Wrapper = ({ children }) => {
   const { userId, signOut } = useAuth();
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
         params: {
@@ -46,6 +48,8 @@ const Wrapper = ({ children }) => {
     } catch (error) {
       console.error(error);
       await signOut();
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -53,5 +57,9 @@ const Wrapper = ({ children }) => {
     fetchData();
   }, []);
 
-  return <>{children}</>;
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <>{children}</>
+  );
 };
