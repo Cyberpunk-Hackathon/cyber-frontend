@@ -4,13 +4,13 @@ import {
   SignedIn,
   SignedOut,
   useAuth,
-} from '@clerk/clerk-react';
-import axios from 'axios';
-import { useEffect , useState} from 'react';
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
-import { router } from './Router';
-import store from './redux/store/store';
+} from '@clerk/clerk-react'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { Provider } from 'react-redux'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './Router'
+import store from './redux/store/store'
 
 function App() {
   return (
@@ -26,40 +26,36 @@ function App() {
         <RedirectToSignIn />
       </SignedOut>
     </ClerkProvider>
-  );
+  )
 }
 
-export default App;
+export default App
 
 const Wrapper = ({ children }) => {
-  const { userId, signOut } = useAuth();
-  const [loading, setLoading] = useState(true);
+  const { userId, signOut } = useAuth()
+  const [loading, setLoading] = useState(true)
 
   const fetchData = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
       const res = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/auth`, {
         params: {
           userId: userId,
         },
-      });
+      })
 
-      sessionStorage.setItem('token', res.data);
+      sessionStorage.setItem('token', res.data)
     } catch (error) {
-      console.error(error);
-      await signOut();
+      console.error(error)
+      await signOut()
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  return loading ? (
-    <div>Loading...</div>
-  ) : (
-    <>{children}</>
-  );
-};
+  return loading ? <div>Loading...</div> : <>{children}</>
+}
