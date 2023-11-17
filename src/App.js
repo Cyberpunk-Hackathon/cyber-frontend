@@ -1,16 +1,17 @@
 import {
   ClerkProvider,
-  RedirectToSignIn,
   SignedIn,
   SignedOut,
   useAuth,
-} from '@clerk/clerk-react'
-import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { Provider } from 'react-redux'
-import { RouterProvider } from 'react-router-dom'
-import { router } from './Router'
-import store from './redux/store/store'
+} from '@clerk/clerk-react';
+import axios from 'axios';
+import { useEffect , useState} from 'react';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './Router';
+import store from './redux/store/store';
+import { LoginPage } from './components/pages/LoginPage';
+
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         </Wrapper>
       </SignedIn>
       <SignedOut>
-        <RedirectToSignIn />
+        <LoginPage />
       </SignedOut>
     </ClerkProvider>
   )
@@ -57,5 +58,9 @@ const Wrapper = ({ children }) => {
     fetchData()
   }, [])
 
-  return loading ? <div>Loading...</div> : <>{children}</>
-}
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
+    <>{children}</>
+  );
+};
