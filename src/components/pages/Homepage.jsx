@@ -1,6 +1,7 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import IssueCard from '../common/IssueCard';
+import Predictor from '../components/Predictor';
 
 const Homepage = () => {
     return (
@@ -22,7 +23,7 @@ const Homepage = () => {
                     </div>
                 </Col>
                 <Col md={8}>
-
+                    <Predictor/>
                 </Col>
             </Row>
         </Container>
