@@ -2,9 +2,14 @@ import { useAuth } from '@clerk/clerk-react';
 import React from 'react';
 import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import logo from '../../assets/images/cyberpunk.svg';
+import { useSelector } from 'react-redux';
+import Select from 'react-select';
 
 const NavBar = () => {
   const { signOut } = useAuth();
+  const { sprints } = useSelector(state => state.sprints)
+  const { board } = useSelector(state => state.selected)
+
   return (
     <Navbar expand='lg' className='bg-body-tertiary'>
       <Navbar.Brand href='#home'>
@@ -23,15 +28,18 @@ const NavBar = () => {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='me-auto navbar-section-1'>
-          <Nav.Link href='#home'>CP - Scrum board</Nav.Link>
-          <NavDropdown title='Sprints' id='basic-nav-dropdown'>
-            <NavDropdown.Item href='#action/3.1'>Sprint 01</NavDropdown.Item>
-            <NavDropdown.Item href='#action/3.2'>Sprint 02</NavDropdown.Item>
-            <NavDropdown.Item href='#action/3.3'>Sprint 03</NavDropdown.Item>
-          </NavDropdown>
+          <Nav.Link >{board.name}</Nav.Link>
+          <Select
+            options={sprints}
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.id}
+          />
           <Button
             variant='outline-danger'
-            onClick={async () => await signOut()}
+            onClick={async () => {
+              sessionStorage.clear()
+              await signOut()
+            }}
           >
             Sign Out
           </Button>
