@@ -7,15 +7,15 @@ const IssueCard = ({ priority, item, onclick }) => {
             <div className='issue-body'>
                 <div className='issue-content'>
                     <span>
-                    {item.fields?.description}
+                    {item.fields?.summary}
                     </span>
                 </div>
                 <div className='priority-section'>
                     <span>Priority:</span>
                     <div className='priority'
-                        style={{ backgroundColor: priority === 0 ? '#25865A' : priority === 1 ? '#F79C30' : '#C13F32' }}
+                        style={{ backgroundColor: item.fields?.priority?.name === 'High' || item.fields?.priority?.name === 'Highest' ? '#C13F32' : item.fields?.priority?.name === 'Medium' ? '#F79C30' : '#25865A' }}
                     >
-                        {priority === 0 ? 'Low' : priority === 1 ? 'Medium' : 'High'}
+                        {item.fields?.priority?.name === 'High' || item.fields?.priority?.name === 'Highest' ? 'High' : item.fields?.priority?.name === 'Medium' ? 'Medium' : 'Low'}
                     </div>
                 </div>
             </div>

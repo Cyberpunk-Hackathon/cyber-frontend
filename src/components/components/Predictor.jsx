@@ -5,8 +5,14 @@ import { useParams } from 'react-router'
 import info from '../../assets/images/info-circle.png'
 import CsvModal from './CsvUploader/CsvModal'
 import Test from './Test'
+import { useSelector } from 'react-redux'
+import { Button, Modal } from 'react-bootstrap'
+import SimilarIssueCard from '../common/SimilarIssueCard'
 
 const Predictor = () => {
+
+  const { issue } = useSelector(state => state.selected)
+
   const [formState, setFormState] = useState({
     checkboxes: [],
     technologies: [],
@@ -18,12 +24,11 @@ const Predictor = () => {
   const [data, setData] = useState([])
   const [predictedValue, setPredictedValue] = useState(0)
   const [acceptanceCrieteria, setAcceptanceCrieteria] = useState('')
-  const [issue, setIssue] = useState('')
   const [suggetionStoryId, setSuggetionStoryId] = useState('')
   const [suggetionTime, setSuggetionTime] = useState('')
   const [testCases, setTestCases] = useState('')
-  const { issueId } = useParams()
-  const token = sessionStorage.getItem('token')
+
+  const [showModal,setShowModal] = useState(false)
 
   const checkboxOptions = ['Frontend Dev.', 'Backend Dev.', 'Quality Assurance']
   const options1 = [
@@ -43,11 +48,72 @@ const Predictor = () => {
     { value: 'High', label: 'High' },
   ]
 
+  const issueData = {
+    id: '15632',
+    metadata: {
+      summary:
+        'PRFT - [Backend] - Driver List, Add, Edit, Delete - Frontend and QA',
+      original_estimate: '',
+      time_spent: '',
+      work_ratio: '',
+      story_points: '8.0',
+      base_sp: '5',
+      'Parent id': '',
+    },
+    distance: 0.7958333118343749,
+    subtasks: [
+      {
+        id: '15633',
+        metadata: {
+          summary: 'Development - frontend',
+          original_estimate: '97200',
+          time_spent: '111600',
+          work_ratio: '114%',
+          story_points: '5',
+          base_sp: '5',
+          'Parent id': '15632',
+        },
+      },
+      {
+        id: '15634',
+        metadata: {
+          summary: 'Test case writing',
+          original_estimate: '10800',
+          time_spent: '19800',
+          work_ratio: '183%',
+          story_points: '5',
+          base_sp: '5',
+          'Parent id': '15632',
+        },
+      },
+      {
+        id: '15661',
+        metadata: {
+          summary: 'Functional testing',
+          original_estimate: '46800',
+          time_spent: '',
+          work_ratio: '0%',
+          story_points: '5',
+          base_sp: '5',
+          'Parent id': '15632',
+        },
+      },
+    ],
+  }
+
   const handleInputChange = (name, value) => {
     setFormState({
       ...formState,
       [name]: value,
     })
+  }
+
+  const handleModalShow = () => {
+    setShowModal(true)
+  }
+
+  const handleClose = () => {
+    setShowModal(false)
   }
 
   const handleSubmit = () => {
@@ -62,29 +128,21 @@ const Predictor = () => {
     }
   }
 
-  useEffect(() => {
-    axios
-      .get('https://cyberpunk-api.onrender.com/issue/', {
-        headers: {
-          accept: '*/*',
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          issueId: issueId,
-        },
-      })
-      .then((response) => {
-        setData(response.data)
-        setAcceptanceCrieteria(response.data.acceptanceCrieteria)
-        setTestCases(response.data.testCases)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [issueId, token])
-
   return (
     <>
+      <Modal show={showModal} onHide={handleClose} size='lg'>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+          <div style={{height: '370px', overflow:'scroll'}}>
+          <SimilarIssueCard issueData={issueData}/>
+            <SimilarIssueCard issueData={issueData}/>
+            <SimilarIssueCard issueData={issueData}/>
+            <SimilarIssueCard issueData={issueData}/>
+          </div>
+        </Modal.Body>
+      </Modal>
+
       <div style={styles.container}>
         <form>
           <div className='row'>
@@ -161,14 +219,14 @@ const Predictor = () => {
                   </div>
                 )}
               </div>
-              <button style={styles.viewIssueBtn} type='button'>
+              <button style={styles.viewIssueBtn} type='button' onClick={handleModalShow}>
                 View Similar Issues
               </button>
               <hr style={styles.hr} />
             </div>
             <div style={styles.predictParent}>
               <div>
-                <p style={styles.issue}>Issue ID : {issue} </p>
+                <p style={styles.issue}>Issue ID : {issue?.id + " " + issue?.key}</p>
               </div>
               <div style={styles.predictButtonDiv}>
                 <button
@@ -197,20 +255,15 @@ const Predictor = () => {
             </div>
 
             <div>
-              <label>
-                <div style={styles.group2}>
-                  <div style={styles.group2Heading}>Acceptance Criteria</div>
-                  <textarea
-                    type='text'
-                    name='acceptanceCrieteria'
-                    style={styles.textField}
-                    value={formState.acceptanceCrieteria}
-                    onChange={(e) =>
-                      handleInputChange('acceptanceCrieteria', e.target.value)
-                    }
-                  />
+
+              <div style={styles.group2}>
+                <div style={styles.group2Heading}>Acceptance Criteria</div>
+                <div style={styles.acceptanceCrieteria} className='mb-3'>
+                  {
+                    <div dangerouslySetInnerHTML={{ __html: issue?.renderedFields.description }} />
+                  }
                 </div>
-              </label>
+              </div>
             </div>
 
             <div>
@@ -243,6 +296,8 @@ const styles = {
     padding: '0px',
     margin: '0px',
     width: '100%',
+    overflowY: 'scroll',
+    height: `calc(100vh - 80px)`
   },
   row: {
     display: 'flex',
@@ -394,4 +449,13 @@ const styles = {
     flexDirection: 'row',
     gap: '10px',
   },
+
+  acceptanceCrieteria: {
+    width: '100%',
+    height: '250px',
+    overflow: 'scroll',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    padding: '20px',
+  }
 }
