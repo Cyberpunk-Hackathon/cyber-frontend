@@ -1,3 +1,13 @@
 .project-select {
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    .outer-content {
+        width: 40%;
+        background-color: rgba(238, 238, 238, 0.50);
+        border-radius: 20px;
+        padding: 30px;
+    }
 }

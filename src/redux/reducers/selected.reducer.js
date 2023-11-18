@@ -3,7 +3,8 @@ import { selectedConstants } from "../constants";
 const initialState = {
     project: null,
     board: null,
-    sprint: null
+    sprint: null,
+    issue: null
 }
 
 export default function (state = initialState, action) {
@@ -11,6 +12,7 @@ export default function (state = initialState, action) {
         case selectedConstants.SELECTED_SPRINT:
         case selectedConstants.SELECTED_PROJECT:
         case selectedConstants.SELECTED_BOARD:
+        case selectedConstants.SELECTED_ISSUE:
             return {
                 ...state,
                 ...action.payload

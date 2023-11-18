@@ -3,6 +3,8 @@ import axios from 'axios'
 import Select from 'react-select'
 import { useParams } from 'react-router'
 import info from '../../assets/images/info-circle.png'
+import CsvModal from './CsvUploader/CsvModal'
+import Test from './Test'
 
 const Predictor = () => {
   const [formState, setFormState] = useState({
@@ -82,153 +84,155 @@ const Predictor = () => {
   }, [issueId, token])
 
   return (
-    <div style={styles.container}>
-      <form>
-        <div className='row'>
-          <div className='col-12' style={styles.checkBoxes}>
-            {checkboxOptions.map((option, index) => (
-              <label key={index}>
-                <div style={styles.checkBoxGroup}>
-                  {option}
-                  <input
-                    style={styles.checkBoxField}
-                    type='checkbox'
-                    name='checkboxes'
-                    checked={formState.checkboxes.includes(option)}
-                    onChange={(e) => {
-                      const isChecked = e.target.checked
-                      const updatedCheckboxes = isChecked
-                        ? [...formState.checkboxes, option]
-                        : formState.checkboxes.filter(
+    <>
+      <div style={styles.container}>
+        <form>
+          <div className='row'>
+            <div className='col-12' style={styles.checkBoxes}>
+              {checkboxOptions.map((option, index) => (
+                <label key={index}>
+                  <div style={styles.checkBoxGroup}>
+                    {option}
+                    <input
+                      style={styles.checkBoxField}
+                      type='checkbox'
+                      name='checkboxes'
+                      checked={formState.checkboxes.includes(option)}
+                      onChange={(e) => {
+                        const isChecked = e.target.checked
+                        const updatedCheckboxes = isChecked
+                          ? [...formState.checkboxes, option]
+                          : formState.checkboxes.filter(
                             (value) => value !== option
                           )
-                      handleInputChange('checkboxes', updatedCheckboxes)
-                    }}
+                        handleInputChange('checkboxes', updatedCheckboxes)
+                      }}
+                    />
+                  </div>
+                </label>
+              ))}
+            </div>
+
+            <div>
+              <div style={styles.group1}>
+                <div style={styles.fieldHeading}>Technologies</div>
+                <div style={styles.dropdown}>
+                  <Select
+                    name='technologies'
+                    styles={{ width: '50%' }}
+                    options={options1}
+                    isMulti
+                    placeholder='Select an option'
+                    onChange={(selectedOptions) =>
+                      handleInputChange('technologies', selectedOptions)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style={styles.group1}>
+                <div style={styles.fieldHeading}>Complexity</div>
+                <div style={styles.dropdown}>
+                  <Select
+                    name='complexity'
+                    options={options2}
+                    placeholder='Select an option'
+                    onChange={(selectedOption) =>
+                      handleInputChange('complexity', selectedOption.value)
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+            <div>
+              <div style={styles.suggetionGroup}>
+                {suggetionStoryId && suggetionTime && (
+                  <div style={styles.suggetionGroup}>
+                    <div>
+                      <img src={info} alt='info' />
+                    </div>
+                    <div>
+                      <p style={styles.suggetionPharagraph}>
+                        Story ID {suggetionStoryId} was done in {suggetionTime}{' '}
+                        which has a scenario similar to the current issue.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <button style={styles.viewIssueBtn} type='button'>
+                View Similar Issues
+              </button>
+              <hr style={styles.hr} />
+            </div>
+            <div style={styles.predictParent}>
+              <div>
+                <p style={styles.issue}>Issue ID : {issue} </p>
+              </div>
+              <div style={styles.predictButtonDiv}>
+                <button
+                  style={styles.predictBtn}
+                  type='button'
+                  onClick={handleSubmit}
+                >
+                  Predict
+                </button>
+                <div className='d-flex align-items-center'>
+                  <div className='me-2 '>Predicted story points: </div>
+                  <p
+                    type='text'
+                    name='predictedValue'
+                    style={
+                      predictedValue > 0
+                        ? { ...styles.predictValueBox, ...styles.predictedValue }
+                        : { ...styles.predictValueBox, ...styles.predictedValue0 }
+                    }
+                    disabled={true}
+                  >
+                    {predictedValue}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label>
+                <div style={styles.group2}>
+                  <div style={styles.group2Heading}>Acceptance Criteria</div>
+                  <textarea
+                    type='text'
+                    name='acceptanceCrieteria'
+                    style={styles.textField}
+                    value={formState.acceptanceCrieteria}
+                    onChange={(e) =>
+                      handleInputChange('acceptanceCrieteria', e.target.value)
+                    }
                   />
                 </div>
               </label>
-            ))}
-          </div>
+            </div>
 
-          <div>
-            <div style={styles.group1}>
-              <div style={styles.fieldHeading}>Technologies</div>
-              <div style={styles.dropdown}>
-                <Select
-                  name='technologies'
-                  styles={{ width: '50%' }}
-                  options={options1}
-                  isMulti
-                  placeholder='Select an option'
-                  onChange={(selectedOptions) =>
-                    handleInputChange('technologies', selectedOptions)
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div style={styles.group1}>
-              <div style={styles.fieldHeading}>Complexity</div>
-              <div style={styles.dropdown}>
-                <Select
-                  name='complexity'
-                  options={options2}
-                  placeholder='Select an option'
-                  onChange={(selectedOption) =>
-                    handleInputChange('complexity', selectedOption.value)
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <div>
-            <div style={styles.suggetionGroup}>
-              {suggetionStoryId && suggetionTime && (
-                <div style={styles.suggetionGroup}>
-                  <div>
-                    <img src={info} alt='info' />
-                  </div>
-                  <div>
-                    <p style={styles.suggetionPharagraph}>
-                      Story ID {suggetionStoryId} was done in {suggetionTime}{' '}
-                      which has a scenario similar to the current issue.
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-            <button style={styles.viewIssueBtn} type='button'>
-              View Similar Issues
-            </button>
-            <hr style={styles.hr} />
-          </div>
-          <div style={styles.predictParent}>
             <div>
-              <p style={styles.issue}>Issue ID : {issue} </p>
-            </div>
-            <div style={styles.predictButtonDiv}>
-              <button
-                style={styles.predictBtn}
-                type='button'
-                onClick={handleSubmit}
-              >
-                Predict
-              </button>
-              <div className='d-flex align-items-center'>
-                <div className='me-2 '>Predicted story points: </div>
-                <p
-                  type='text'
-                  name='predictedValue'
-                  style={
-                    predictedValue > 0
-                      ? { ...styles.predictValueBox, ...styles.predictedValue }
-                      : { ...styles.predictValueBox, ...styles.predictedValue0 }
-                  }
-                  disabled={true}
-                >
-                  {predictedValue}
-                </p>
-              </div>
+              <label>
+                <div style={styles.group2}>
+                  <div style={styles.group2Heading}>Test Cases</div>
+                  <textarea
+                    type='text'
+                    name='testCases'
+                    style={styles.textField}
+                    value={formState.testCases}
+                    onChange={(e) =>
+                      handleInputChange('testCases', e.target.value)
+                    }
+                  />
+                </div>
+              </label>
             </div>
           </div>
-
-          <div>
-            <label>
-              <div style={styles.group2}>
-                <div style={styles.group2Heading}>Acceptance Criteria</div>
-                <textarea
-                  type='text'
-                  name='acceptanceCrieteria'
-                  style={styles.textField}
-                  value={formState.acceptanceCrieteria}
-                  onChange={(e) =>
-                    handleInputChange('acceptanceCrieteria', e.target.value)
-                  }
-                />
-              </div>
-            </label>
-          </div>
-
-          <div>
-            <label>
-              <div style={styles.group2}>
-                <div style={styles.group2Heading}>Test Cases</div>
-                <textarea
-                  type='text'
-                  name='testCases'
-                  style={styles.textField}
-                  value={formState.testCases}
-                  onChange={(e) =>
-                    handleInputChange('testCases', e.target.value)
-                  }
-                />
-              </div>
-            </label>
-          </div>
-        </div>
-      </form>
-    </div>
+        </form>
+      </div>
+    </>
   )
 }
 
