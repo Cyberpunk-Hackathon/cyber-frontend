@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import { useParams } from 'react-router'
 import info from '../../assets/images/info-circle.png'
+import UploadCSV from './UploadCSV'
 
 const Predictor = () => {
   const [formState, setFormState] = useState({
@@ -83,9 +84,9 @@ const Predictor = () => {
 
   return (
     <div style={styles.container}>
-      <div className='row'>
-        <form>
-          <div style={styles.checkBoxes}>
+      <form>
+        <div className='row'>
+          <div className='col-12' style={styles.checkBoxes}>
             {checkboxOptions.map((option, index) => (
               <label key={index}>
                 <div style={styles.checkBoxGroup}>
@@ -100,8 +101,8 @@ const Predictor = () => {
                       const updatedCheckboxes = isChecked
                         ? [...formState.checkboxes, option]
                         : formState.checkboxes.filter(
-                            (value) => value !== option
-                          )
+                          (value) => value !== option
+                        )
                       handleInputChange('checkboxes', updatedCheckboxes)
                     }}
                   />
@@ -175,18 +176,21 @@ const Predictor = () => {
               >
                 Predict
               </button>
-              <p
-                type='text'
-                name='predictedValue'
-                style={
-                  predictedValue > 0
-                    ? { ...styles.predictValueBox, ...styles.predictedValue }
-                    : { ...styles.predictValueBox, ...styles.predictedValue0 }
-                }
-                disabled={true}
-              >
-                {predictedValue}
-              </p>
+              <div className='d-flex align-items-center'>
+                <div className='me-2 '>Predicted story points: </div>
+                <p
+                  type='text'
+                  name='predictedValue'
+                  style={
+                    predictedValue > 0
+                      ? { ...styles.predictValueBox, ...styles.predictedValue }
+                      : { ...styles.predictValueBox, ...styles.predictedValue0 }
+                  }
+                  disabled={true}
+                >
+                  {predictedValue}
+                </p>
+              </div>
             </div>
           </div>
 
@@ -223,9 +227,9 @@ const Predictor = () => {
               </div>
             </label>
           </div>
-        </form>
-      </div>
-      {/* <div className='row'>sss</div> */}
+        </div>
+      </form>
+      <UploadCSV/>
     </div>
   )
 }
@@ -236,12 +240,7 @@ const styles = {
   container: {
     padding: '0px',
     margin: '0px',
-    height: '100%',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   row: {
     display: 'flex',
@@ -365,6 +364,7 @@ const styles = {
 
   checkBoxes: {
     marginBottom: '5vh',
+    paddingTop: '50px',
   },
   predictParent: {
     display: 'flex',

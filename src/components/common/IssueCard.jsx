@@ -1,13 +1,13 @@
 import React from 'react';
 
-const IssueCard = ({ priority }) => {
+const IssueCard = ({ priority, item, onclick }) => {
     return (
-        <div className='issuecard'>
-            <span className='issue-heading'>Issue ID  : CAA-123 Title - Average Feedback Page</span>
+        <div className='issuecard' onClick={() => onclick(item)}>
+            <span className='issue-heading'>Issue ID: {item.key}   Title: {item.fields?.summary}</span>
             <div className='issue-body'>
                 <div className='issue-content'>
                     <span>
-                        As a registered user, I want to be able to reset my password easily, so that I can regain access to my account if I forget my login credentials
+                    {item.fields?.description}
                     </span>
                 </div>
                 <div className='priority-section'>
