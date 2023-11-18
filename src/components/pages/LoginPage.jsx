@@ -9,7 +9,7 @@ export function LoginPage() {
     return signIn.authenticateWithRedirect({
       strategy,
       redirectUrl:
-        'https://unbiased-tadpole-60.clerk.accounts.dev/v1/oauth_callback',
+        '/sso-callback',
       redirectUrlComplete: '/',
     });
   };
