@@ -1,18 +1,18 @@
-import { useSignIn } from '@clerk/clerk-react'
-import atlassianIcon from '../../assets/images/AtlassianIcon.svg'
-import rightArrow from '../../assets/images/RightArrow.svg'
-import UploadCSV from '../components/CsvUploader/UploadCSV'
+import { useSignIn } from '@clerk/clerk-react';
+import atlassianIcon from '../../assets/images/AtlassianIcon.svg';
+import rightArrow from '../../assets/images/RightArrow.svg';
 
 export function LoginPage() {
-  const { signIn } = useSignIn()
+  const { signIn } = useSignIn();
 
   const signInWith = (strategy) => {
     return signIn.authenticateWithRedirect({
       strategy,
-      redirectUrl: '/sso-callback',
+      redirectUrl:
+        'https://unbiased-tadpole-60.clerk.accounts.dev/v1/oauth_callback',
       redirectUrlComplete: '/',
-    })
-  }
+    });
+  };
 
   return (
     <div style={styles.container}>
@@ -39,7 +39,7 @@ export function LoginPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 const styles = {
@@ -117,4 +117,4 @@ const styles = {
     color: '#0052CC',
     cursor: 'pointer',
   },
-}
+};
