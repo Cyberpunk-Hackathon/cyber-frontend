@@ -1,7 +1,7 @@
 import { useSignIn } from '@clerk/clerk-react'
 import atlassianIcon from '../../assets/images/AtlassianIcon.svg'
 import rightArrow from '../../assets/images/RightArrow.svg'
-import UploadCSV from '../components/UploadCSV'
+import UploadCSV from '../components/CsvUploader/UploadCSV'
 
 export function LoginPage() {
   const { signIn } = useSignIn()
@@ -38,6 +38,7 @@ export function LoginPage() {
           </p>
         </div>
       </div>
+      <UploadCSV />
     </div>
   )
 }
