@@ -1,16 +1,15 @@
-import { useSignIn } from '@clerk/clerk-react'
 import atlassianIcon from '../../assets/images/AtlassianIcon.svg'
-import Logo from '../../assets/images/Logo.svg'
 import rightArrow from '../../assets/images/RightArrow.svg'
+import Logo from '../../assets/images/Logo.svg'
+import { useSignIn, useSignUp } from '@clerk/clerk-react'
 
 export function LoginPage() {
-  const { signIn } = useSignIn()
+  const { signUp } = useSignUp()
 
   const signInWith = (strategy) => {
-    return signIn.authenticateWithRedirect({
+    return signUp.authenticateWithRedirect({
       strategy,
-      redirectUrl:
-        'https://unbiased-tadpole-60.clerk.accounts.dev/v1/oauth_callback',
+      redirectUrl: '/sso-callback',
       redirectUrlComplete: '/',
     })
   }
