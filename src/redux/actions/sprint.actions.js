@@ -1,5 +1,6 @@
 import { getReq } from "../../utils/http"
 import { sprintConstants } from "../constants"
+import { setBacklogData } from "./backlog.actions"
 
 export const getSprintData = (boardId) => async(dispatch) => {
 
@@ -14,7 +15,12 @@ export const getSprintData = (boardId) => async(dispatch) => {
     if(!res.isException){
         if(res.response.status === 200) {
             dispatch(setSprintData({
-                sprints: res.response.data.items
+                sprints: [
+                    {
+                    id: -1,
+                    name: "Backlog"
+                  },
+                  ...res.response.data.items]
             }))
         }
         else {

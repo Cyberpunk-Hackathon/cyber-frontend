@@ -3,6 +3,7 @@ import axios from 'axios'
 import Select from 'react-select'
 import { useParams } from 'react-router'
 import info from '../../assets/images/info-circle.png'
+import UploadCSV from './UploadCSV'
 
 const Predictor = () => {
   const [formState, setFormState] = useState({
@@ -221,7 +222,7 @@ const Predictor = () => {
           </div>
         </div>
       </form>
-      {/* <div className='row'>sss</div> */}
+      <UploadCSV/>
     </div>
   )
 }

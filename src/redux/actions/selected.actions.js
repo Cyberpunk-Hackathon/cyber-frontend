@@ -20,3 +20,10 @@ export const setSelectedBoard = (payload) => (dispatch) => {
         payload: payload
     })
 }
+
+export const setSelectedIssue = (payload) => (dispatch) => {
+    dispatch({
+        type: selectedConstants.SELECTED_ISSUE,
+        payload:payload
+    })
+}
