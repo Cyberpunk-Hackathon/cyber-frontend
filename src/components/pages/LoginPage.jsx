@@ -1,7 +1,7 @@
-import { useSignIn } from '@clerk/clerk-react'
 import atlassianIcon from '../../assets/images/AtlassianIcon.svg'
 import rightArrow from '../../assets/images/RightArrow.svg'
-import UploadCSV from '../components/CsvUploader/UploadCSV'
+import Logo from '../../assets/images/Logo.svg'
+import { useSignIn, useSignUp } from '@clerk/clerk-react'
 
 export function LoginPage() {
   const { signIn } = useSignIn()
@@ -17,10 +17,12 @@ export function LoginPage() {
   return (
     <div style={styles.container}>
       <div style={styles.signIn}>
-        <div style={styles.heading}>CYBERPUNK</div>
+        <div style={styles.heading}>
+          <img style={styles.logo} src={Logo} />
+        </div>
         <div style={styles.subHeading}>
           <span style={styles.signInText}>Sign In</span>
-          <span style={styles.continueText}>to continue to EstiMate</span>
+          <span style={styles.continueText}>to continue to StorySight</span>
         </div>
         <div
           style={styles.signInButtonContainer}
@@ -32,11 +34,11 @@ export function LoginPage() {
           </div>
           <img src={rightArrow} />
         </div>
-        <div style={styles.signUpContainer}>
+        {/* <div style={styles.signUpContainer}>
           <p>
             Don’t have an account ? <span style={styles.signUp}>Sign up</span>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   )
@@ -116,5 +118,10 @@ const styles = {
   signUp: {
     color: '#0052CC',
     cursor: 'pointer',
+  },
+  logo: {
+    marginTop: '10px',
+    width: '60px',
+    height: '60px',
   },
 }
