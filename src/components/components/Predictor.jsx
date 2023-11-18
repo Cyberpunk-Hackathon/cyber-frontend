@@ -86,7 +86,7 @@ const Predictor = () => {
   return (
     <>
       <PredictorLoaderModal />
-        <div style={styles.container}>
+      <div style={styles.container}>
         <div className='row'>
           <form>
             <div style={styles.checkBoxes}>
@@ -153,8 +153,8 @@ const Predictor = () => {
                 </div>
                 <div>
                   <p style={styles.suggetionPharagraph}>
-                    Story ID {suggetionStoryId} was done in {suggetionTime} which
-                    has a scenario similar to the current issue.
+                    Story ID {suggetionStoryId} was done in {suggetionTime}{' '}
+                    which has a scenario similar to the current issue.
                   </p>
                 </div>
               </div>
@@ -234,12 +234,7 @@ const styles = {
   container: {
     padding: '0px',
     margin: '0px',
-    height: '100%',
     width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   row: {
     display: 'flex',
@@ -348,6 +343,7 @@ const styles = {
 
   checkBoxes: {
     marginBottom: '5vh',
+    paddingTop: '50px',
   },
   predictParent: {
     display: 'flex',
