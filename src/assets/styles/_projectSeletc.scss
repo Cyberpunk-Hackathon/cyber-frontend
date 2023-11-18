@@ -9,5 +9,11 @@
         background-color: rgba(238, 238, 238, 0.50);
         border-radius: 20px;
         padding: 30px;
+
+        .content  {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
     }
 }

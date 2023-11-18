@@ -12,7 +12,7 @@ const NavBar = () => {
   const { signOut } = useAuth();
   const dispatch = useDispatch()
   const { sprints } = useSelector(state => state.sprints)
-  const { board } = useSelector(state => state.selected)
+  const { board, sprint } = useSelector(state => state.selected)
 
   const handleSprintChange = (e) => {
 
@@ -23,13 +23,19 @@ const NavBar = () => {
     if (e.id === -1) {
       dispatch(getBacklogData(board.id))
     }
-    
+
     else {
       dispatch(getSprintIssueData(board.id, e.id))
     }
   }
 
   useEffect(() => {
+    dispatch(setSelectedSprint({
+      sprint: {
+        id: -1,
+        name: "Backlog"
+      }
+    }))
     dispatch(getBacklogData(board.id))
   }, [])
 
@@ -54,11 +60,14 @@ const NavBar = () => {
           <Nav.Link >{board?.name}</Nav.Link>
           <Select
             options={sprints}
+            value={sprint}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
             onChange={handleSprintChange}
           />
-          <Button
+        </Nav>
+        <Nav className='navbar-section-2'>
+        <Button
             variant='outline-danger'
             onClick={async () => {
               sessionStorage.clear()
@@ -67,10 +76,6 @@ const NavBar = () => {
           >
             Sign Out
           </Button>
-        </Nav>
-        <Nav className='navbar-section-2'>
-          <div></div>
-          <div></div>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

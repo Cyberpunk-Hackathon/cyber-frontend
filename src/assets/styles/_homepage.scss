@@ -1,16 +1,26 @@
 .homepage {
     .homepage-section-left {
         border-right: 5px solid #ECECF1;
-        padding-right: 30px;
+        overflow-y: scroll;
+        height: calc(100vh - 80px);
 
         .heading {
             padding-top: 50px;
             margin-bottom: 30px;
             text-align: center;
-            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding-right: 15px;
+
             span {
                 font-family: 'Poppins-medium';
                 font-size: 20px;
+            }
+
+            input {
+                padding-right: 15px;
             }
         }
 
@@ -19,7 +29,8 @@
             flex-direction: column;
             gap: 20px;
             overflow-y: scroll;
-            max-height: 110vh;
+            padding-right: 15px;
+           
         }
     }
 }

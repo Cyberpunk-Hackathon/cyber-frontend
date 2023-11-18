@@ -1,0 +1,5 @@
+export const similiarIssuesConstants  = {
+    GET_SIMILAR_ISSUE: 'GET_SIMILAR_ISSUE',
+    GET_SIMILAR_ISSUE_ERROR: 'GET_SIMILAR_ISSUE_ERROR',
+    MODAL_CLOSE: 'MODAL_CLOSE'
+}

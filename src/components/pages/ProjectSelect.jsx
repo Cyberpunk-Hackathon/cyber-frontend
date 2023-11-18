@@ -16,6 +16,7 @@ const ProjectSelect = () => {
     const { projects } = useSelector(state => state.projects)
     const { sprints } = useSelector(state => state.sprints)
     const { boards } = useSelector(state => state.boards)
+    const { project, board } = useSelector(state => state.selected)
 
     const handleProjectChange = (e) => {
         console.log('e', e);
@@ -54,6 +55,7 @@ const ProjectSelect = () => {
                         getOptionValue={(option) => option.id}
                         onChange={handleBoardChange}
                         placeholder=""
+                        isDisabled={!project}
                     />
                     {/* <label htmlFor="project">Sprint</label>
                 <Select
@@ -63,8 +65,8 @@ const ProjectSelect = () => {
                     onChange={handleSprintChange}
                 /> */}
 
-                    <Button onClick={() => navigate('/dashboard')}>
-                        Next
+                    <Button onClick={() => navigate('/dashboard')} disabled={!project || !board}>
+                        Next 
                     </Button>
                 </div>
             </div>
