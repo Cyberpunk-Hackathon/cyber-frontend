@@ -1,41 +1,45 @@
-import { useAuth } from '@clerk/clerk-react';
-import React, { useEffect } from 'react';
-import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap';
-import logo from '../../assets/images/cyberpunk.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { getBacklogData, getSprintIssueData } from '../../redux/actions/backlog.actions';
-import { getSprintData } from '../../redux/actions/sprint.actions';
-import { setSelectedSprint } from '../../redux/actions/selected.actions';
+import { useAuth } from '@clerk/clerk-react'
+import React, { useEffect } from 'react'
+import { Button, Nav, NavDropdown, Navbar } from 'react-bootstrap'
+import logo from '../../assets/images/Logo.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import {
+  getBacklogData,
+  getSprintIssueData,
+} from '../../redux/actions/backlog.actions'
+import { getSprintData } from '../../redux/actions/sprint.actions'
+import { setSelectedSprint } from '../../redux/actions/selected.actions'
 
 const NavBar = () => {
-  const { signOut } = useAuth();
+  const { signOut } = useAuth()
   const dispatch = useDispatch()
-  const { sprints } = useSelector(state => state.sprints)
-  const { board, sprint } = useSelector(state => state.selected)
+  const { sprints } = useSelector((state) => state.sprints)
+  const { board, sprint } = useSelector((state) => state.selected)
 
   const handleSprintChange = (e) => {
-
-    dispatch(setSelectedSprint({
-      sprint: e
-    }))
+    dispatch(
+      setSelectedSprint({
+        sprint: e,
+      })
+    )
 
     if (e.id === -1) {
       dispatch(getBacklogData(board.id))
-    }
-
-    else {
+    } else {
       dispatch(getSprintIssueData(board.id, e.id))
     }
   }
 
   useEffect(() => {
-    dispatch(setSelectedSprint({
-      sprint: {
-        id: -1,
-        name: "Backlog"
-      }
-    }))
+    dispatch(
+      setSelectedSprint({
+        sprint: {
+          id: -1,
+          name: 'Backlog',
+        },
+      })
+    )
     dispatch(getBacklogData(board.id))
   }, [])
 
@@ -50,14 +54,14 @@ const NavBar = () => {
           className='d-inline-block align-top'
         />{' '}
         <div className='navbar-title'>
-          <span className='main-title'>Cyberpunk</span>
+          <span className='main-title'>StroySight</span>
           <span className='subtitle'>Software project</span>
         </div>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         <Nav className='me-auto navbar-section-1'>
-          <Nav.Link >{board?.name}</Nav.Link>
+          <Nav.Link>{board?.name}</Nav.Link>
           <Select
             options={sprints}
             value={sprint}
@@ -67,7 +71,7 @@ const NavBar = () => {
           />
         </Nav>
         <Nav className='navbar-section-2'>
-        <Button
+          <Button
             variant='outline-danger'
             onClick={async () => {
               sessionStorage.clear()
@@ -79,7 +83,7 @@ const NavBar = () => {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
