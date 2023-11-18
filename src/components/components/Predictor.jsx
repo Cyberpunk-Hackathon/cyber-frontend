@@ -51,6 +51,7 @@ const Predictor = () => {
 
   const handleSubmit = () => {
     console.log(formState)
+    PredictorLoaderModal.handleClick()
 
     const data = {
       checkboxes: formState.checkboxes,
@@ -84,7 +85,7 @@ const Predictor = () => {
 
   return (
     <>
-      <PredictorLoaderModal/>
+      <PredictorLoaderModal />
         <div style={styles.container}>
         <div className='row'>
           <form>

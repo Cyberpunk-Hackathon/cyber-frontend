@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-const PredictorLoaderModal = () => {
+const PredictorLoaderModal = ({}) => {
   const [show, setShow] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
