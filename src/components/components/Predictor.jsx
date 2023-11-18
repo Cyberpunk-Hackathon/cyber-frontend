@@ -3,7 +3,6 @@ import axios from 'axios'
 import Select from 'react-select'
 import { useParams } from 'react-router'
 import info from '../../assets/images/info-circle.png'
-import UploadCSV from './UploadCSV'
 
 const Predictor = () => {
   const [formState, setFormState] = useState({
@@ -101,8 +100,8 @@ const Predictor = () => {
                       const updatedCheckboxes = isChecked
                         ? [...formState.checkboxes, option]
                         : formState.checkboxes.filter(
-                          (value) => value !== option
-                        )
+                            (value) => value !== option
+                          )
                       handleInputChange('checkboxes', updatedCheckboxes)
                     }}
                   />
@@ -229,7 +228,6 @@ const Predictor = () => {
           </div>
         </div>
       </form>
-      <UploadCSV/>
     </div>
   )
 }
