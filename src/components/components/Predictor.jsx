@@ -17,8 +17,8 @@ const Predictor = () => {
   const [predictedValue, setPredictedValue] = useState(0)
   const [acceptanceCrieteria, setAcceptanceCrieteria] = useState('')
   const [issue, setIssue] = useState('')
-  const [suggetionStoryId, setSuggetionStoryId] = useState('placeholder')
-  const [suggetionTime, setSuggetionTime] = useState('placeholder')
+  const [suggetionStoryId, setSuggetionStoryId] = useState('')
+  const [suggetionTime, setSuggetionTime] = useState('')
   const [testCases, setTestCases] = useState('')
   const { issueId } = useParams()
   const token = sessionStorage.getItem('token')
@@ -144,16 +144,23 @@ const Predictor = () => {
           </div>
           <div>
             <div style={styles.suggetionGroup}>
-              <div>
-                <img src={info} alt='info' />
-              </div>
-              <div>
-                <p style={styles.suggetionPharagraph}>
-                  Story ID {suggetionStoryId} was done in {suggetionTime} which
-                  has a scenario similar to the current issue.
-                </p>
-              </div>
+              {suggetionStoryId && suggetionTime && (
+                <div style={styles.suggetionGroup}>
+                  <div>
+                    <img src={info} alt='info' />
+                  </div>
+                  <div>
+                    <p style={styles.suggetionPharagraph}>
+                      Story ID {suggetionStoryId} was done in {suggetionTime}{' '}
+                      which has a scenario similar to the current issue.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
+            <button style={styles.viewIssueBtn} type='button'>
+              View Similar Issues
+            </button>
             <hr style={styles.hr} />
           </div>
           <div style={styles.predictParent}>
@@ -286,6 +293,21 @@ const styles = {
     color: 'white',
     height: '50px',
     width: '100px',
+    borderRadius: '5px',
+    border: '1px solid #ccc',
+    padding: '5px',
+    margin: '5px',
+    fontSize: '18px',
+    fontWeight: '500',
+    letterSpacing: '0.5px',
+    marginRight: '3vw',
+  },
+
+  viewIssueBtn: {
+    backgroundColor: '#0C66E4',
+    color: 'white',
+    height: '45px',
+    width: '200px',
     borderRadius: '5px',
     border: '1px solid #ccc',
     padding: '5px',
