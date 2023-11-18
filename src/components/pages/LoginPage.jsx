@@ -1,15 +1,14 @@
-import { useSignIn } from '@clerk/clerk-react';
+import { useSignIn, useSignUp } from '@clerk/clerk-react';
 import atlassianIcon from '../../assets/images/AtlassianIcon.svg';
 import rightArrow from '../../assets/images/RightArrow.svg';
 
 export function LoginPage() {
-  const { signIn } = useSignIn();
+  const { signUp } = useSignUp();
 
   const signInWith = (strategy) => {
-    return signIn.authenticateWithRedirect({
+    return signUp.authenticateWithRedirect({
       strategy,
-      redirectUrl:
-        '/sso-callback',
+      redirectUrl: '/sso-callback',
       redirectUrlComplete: '/',
     });
   };
