@@ -1,14 +1,11 @@
 import axios from "axios";
 import {
-    getTestResponse,
-    isEmptyObj,
     getAPITokens
 } from "./functions";
 
-let IS_TEST = JSON.parse(process.env.REACT_APP_IS_TEST);
 let axioDefaults = {
-    baseURL: process.env.REACT_APP_BASE_URL,
-    timeout: JSON.parse(process.env.REACT_APP_REQUEST_TIMEOUT),
+    baseURL: "https://cyberpunk-api.onrender.com",
+    timeout: 60000,
     headers: {
         'Content-Type': 'application/json',
         "X-Requested-With": "XMLHttpRequest",
@@ -20,14 +17,12 @@ let axiosReq = async (config) => {
     let currentTime = new Date().getTime();
     sessionStorage.setItem("API_LAST_ACCESS_TIME", currentTime);
 
-    if (IS_TEST) {
-        return getTestResponse(config.url);
-    }
 
     try {
 
         // Add Authorization Header
-        let access_token = getAPITokens("access");
+        let access_token = sessionStorage.getItem('token')
+       
         if (access_token) {
             axioDefaults.headers["Authorization"] = "Bearer " + access_token;
         }
