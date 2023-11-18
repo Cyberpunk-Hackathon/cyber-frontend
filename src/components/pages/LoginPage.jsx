@@ -4,10 +4,10 @@ import Logo from '../../assets/images/Logo.svg'
 import { useSignIn, useSignUp } from '@clerk/clerk-react'
 
 export function LoginPage() {
-  const { signUp } = useSignUp()
+  const { signIn } = useSignIn()
 
   const signInWith = (strategy) => {
-    return signUp.authenticateWithRedirect({
+    return signIn.authenticateWithRedirect({
       strategy,
       redirectUrl: '/sso-callback',
       redirectUrlComplete: '/',
